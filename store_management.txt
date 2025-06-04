@@ -1,0 +1,94 @@
+Store Management App
+
+Detailed Models and relationships
+
+1.User
+Represents : Employees who manage the store -e.g admins, cashiers, stock managers
+Key attributes : Name , email(unique login), update inventory, and manage the system.
+
+Relationships:
+A user can create many orders (e.g Cashier processing sales)
+A user can perform many inventoryLog entries( track stock in /out operations).
+
+
+
+2.Category
+Represents :Product groupings to organize items (e.g, Electronics, Clothing, Grocery).
+Key attributes: Name, description
+Purpose: Helps in filtering and classifying products for easier management and 
+navigation.
+
+Relatioinships
+-Eacn category can have many products 
+- Each product belongs to exactly one Category
+
+3.Product
+Represents :Items available for sale in the store.
+Key attributes : Name description, SKU(unique product code),price, stock quantity.
+Purpose:Core inventory items sold to customers
+
+Relationships:
+Each product belongs to one Category
+Each product can appear in many OrderItems (because many customers can order the same product)
+Each product can have many inventoryLogs (tracking stock changes over time)
+
+
+4.CUSTOMER
+Represents: Buyers or clients purchase products
+key attributes: Name , email ,phone ,address
+Purpose:Stores customer details to track orders and for potential customer
+management(e.g., loyalty, marketing)
+
+Relationships:
+Each Customer can place many orders.
+Each order is linked to exactly one Customer
+
+ORDER
+Represents:A Sale or purchase transaction by a customer
+Key attributes: Order date, total amount, status(pending/completes/cancelled)
+Purpose:Tracks the sale details and status
+
+Relationships:
+Each Order belongs to one Customer
+Each Order is created by one User (e.g., cashier who processed the sale).
+Each Order contains many OrderItems (one per product pruchased)
+
+
+6.OrderItem
+>Represents: the products included in a particular order
+Key attributes: Quantity ordered price at purchase
+Purchase:Breaks down an order into individual product line items
+
+Relationships:
+Each OrderItem belongs to one Order
+Each OrderItem relates to one Product
+This is the many-to-many relationships between Orders and Products
+realized via OrderItems as a join table with extra info like quantity and purchase price
+
+7.InventoryLog
+-Represents:A record of stock changes for products.
+-Key attributes: Quantity change(+/-) type (in/out) date.
+-purpose: To track inventory movement for auditing and stock management
+
+Relationships
+each inventoryLog is linked to exactly one Product
+Each inventoryLog is linked to exactly one User (who updated the inventory).
+
+Explanation of Relations
+Relation	Description	Cardinality
+User → Orders	A user (cashier/admin) creates many orders.	1-to-many
+Customer → Orders	A customer can place many orders.	1-to-many
+Order → OrderItems	An order contains multiple products.	1-to-many
+Product → OrderItems	A product can appear in many orders.	1-to-many
+Product → Category	Each product belongs to one category.	Many-to-1
+Product → InventoryLogs	Stock changes are logged per product.	1-to-many
+InventoryLog → User	Each inventory change is performed by one user	Many-to-1
+
+Why This Structure?
+Separation of Concerns: Products, Customers, Orders, and Users have distinct roles and are cleanly modeled.
+
+Data Integrity: Relationships ensure we can easily query all orders by a customer, or all products in an order.
+
+Extensibility: Adding features like suppliers, discounts, or payments can be done by extending this base.
+
+Auditability: InventoryLog keeps track of every stock change with the responsible user — essential for real-world management.
