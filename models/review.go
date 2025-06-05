@@ -7,11 +7,11 @@ import (
 type Review struct {
 	ID         uint `gorm:"primaryKey"`
 	ProductID  uint
-	Product    Product
+	Product    Product `gorm:"foreignKey:ProductID" json:"-" binding:"-"`
 	CustomerID uint
-	Customer   Customer
-	Rating     int    // Rating out of 5
-	Comment    string // Review text
+	Customer   Customer `gorm:"foreignKey:CustomerID" json:"-" binding:"-"`
+	Rating     int
+	Comment    string
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }

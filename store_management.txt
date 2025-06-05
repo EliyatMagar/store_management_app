@@ -92,3 +92,5 @@ Data Integrity: Relationships ensure we can easily query all orders by a custome
 Extensibility: Adding features like suppliers, discounts, or payments can be done by extending this base.
 
 Auditability: InventoryLog keeps track of every stock change with the responsible user — essential for real-world management.
+
+//

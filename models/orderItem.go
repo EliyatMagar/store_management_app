@@ -1,15 +1,14 @@
 package models
 
 type OrderItem struct {
-	ID      uint `gorm:"primaryKey"`
-	OrderID uint
-	Order   Order
+	ID      uint   `gorm:"primaryKey"`
+	OrderID uint   `json:"orderID"`
+	Order   *Order `gorm:"foreignKey:OrderID" json:"-" binding:"-"`
 
-	ProductID uint
-	Product   Product
+	ProductID uint     `json:"productID"`
+	Product   *Product `gorm:"foreignKey:ProductID" json:"-" binding:"-"`
 
-	Quantity        int
-	PriceAtPurchase float64 // Price at the time of purchase
-	Discount        float64 // Any discount applied to this item
-
+	Quantity        int     `json:"quantity"`
+	PriceAtPurchase float64 `json:"priceAtPurchase"`
+	Discount        float64 `json:"discount"`
 }

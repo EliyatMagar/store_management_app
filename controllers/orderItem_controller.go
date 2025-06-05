@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -15,6 +16,7 @@ func CreateOrderItem(c *gin.Context) {
 	var orderItem models.OrderItem
 
 	if err := c.ShouldBindJSON(&orderItem); err != nil {
+		fmt.Println("Bind Error", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
 		return
 	}
